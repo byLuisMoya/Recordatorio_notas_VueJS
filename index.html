@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js" integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b796c7785a.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Notas Recordatorios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="app">
+    <h1>Proyecto Recordatorios - Luis Moya Prados</h1>
+
+        <input type="text" id="texto" placeholder="¿Qué quieres recordar?" v-model="textoInput" @keyup.enter="submit">
+        <input type="submit" id="boton" value="Añadir">
+    
+    <hr>
+    <p><i class="fa-solid fa-chart-column"></i> <span id="tareas-pendientes">{{ tareasCompletadas }}</span> Tareas pendientes de un total de <span id="tareas-totales">{{ tareasTotales }}</span> | <a id="borrarTodo" @click="borrarTareas"><i class="fa-solid fa-xmark"></i> Borrar tareas completadas</a><input type="text" id="filtro" placeholder="Filtra por palabras" v-model="campoFiltro"></p>
+    <hr>
+    <div id="tareas">
+        
+        <div id="tarea" v-for="recordatorio in recordatoriosFiltrados" :key="recordatorio.codigoNota">
+            <i class='fa-regular ' v-bind:class='[{"fa-check-circle" : recordatorio.hecho}, {"fa-circle" : !recordatorio.hecho}]' id='hecho' v-model="recordatorio.hecho" @click="recordatorio.hecho = !recordatorio.hecho"></i>
+            <h2 v-bind:class='{"tachado" : recordatorio.hecho}'>{{ recordatorio.titulo }}</h2>
+            <i class='fa-solid fa-ban' id='elimina' @click="borrarNota(recordatorio)"></i><br>
+            <h6>Prioridad: 
+                <button id='low' name='low' :class='[{selected : recordatorio.prioridad == 1}, {noselected : recordatorio.prioridad != 1}]' v-model="recordatorio.prioridad" @click="recordatorio.prioridad = 1, recordatoriosFiltrados">
+                    <i class='fa-solid fa-angle-down'></i>Low</button>
+                <button id='normal' name='normal' :class='[{selected : recordatorio.prioridad == 2}, {noselected : recordatorio.prioridad != 2}]' v-model="recordatorio.prioridad" @click="recordatorio.prioridad = 2, recordatoriosFiltrados">Normal</button>
+                <button id='high' name='high' :class='[{selected : recordatorio.prioridad == 3}, {noselected : recordatorio.prioridad != 3}]' v-model="recordatorio.prioridad" @click="recordatorio.prioridad = 3, recordatoriosFiltrados">
+                    <i class='fa-solid fa-angle-up'></i>High</button>
+                ||  Añadido hace {{calcularMinutos}} minutos</h6>
+        </div>
+
+    </div>
+    <br>
+    <div id="pie">
+        <p>Desarrollado por Luis Moya Prados</p>
+        <p>Codigo disponible en <a href=""><i class="fa-brands fa-github"></i>GitHub</a></p>
+    </div>
+    <script src="./index.js"></script>
+</body>
+</html>
