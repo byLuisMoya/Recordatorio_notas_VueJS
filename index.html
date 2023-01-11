@@ -14,7 +14,7 @@
 <body id="app">
     <h1>Proyecto Recordatorios - Luis Moya Prados</h1>
 
-        <input type="text" id="texto" placeholder="¿Qué quieres recordar?" v-model="textoInput" @keyup.enter="submit">
+        <input type="text" id="texto" placeholder="¿Qué quieres recordar?" v-model="textoInput" @keyup.enter="submit" v-on:submit="submit">
         <input type="submit" id="boton" value="Añadir">
     
     <hr>
